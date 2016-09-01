@@ -1,4 +1,4 @@
-# MeetRecycleView
+# MeetRecyclerView
 This is a page RecyclerView data loading, load more support libraries can be customized loading animation
 
 
@@ -6,7 +6,7 @@ This is a page RecyclerView data loading, load more support libraries can be cus
 	<dependency>
   	    <groupId>net.soulwolf.widget</groupId>
 		<url>https://dl.bintray.com/soulwolf/maven</url>
-  	    <artifactId>MeetRecycleView</artifactId>
+  	    <artifactId>MeetRecyclerView</artifactId>
   	    <version>1.0.1</version>
 	</dependency>
 ## Gradle
@@ -19,7 +19,7 @@ This is a page RecyclerView data loading, load more support libraries can be cus
        }
 	}
 	
-	compile 'net.soulwolf.widget:MeetRecycleView:1.0.1'
+	compile 'net.soulwolf.widget:MeetRecyclerView:1.0.1'
 
 ## Developed by
  Ching Soulwolf - <a href='javascript:'>Ching.Soulwolf@gmail.com</a>
@@ -27,7 +27,7 @@ This is a page RecyclerView data loading, load more support libraries can be cus
 
 ## License
 	Copyright 2015 Soulwolf Ching
-	Copyright 2015 The Android Open Source Project for MeetRecycleView
+	Copyright 2015 The Android Open Source Project for MeetRecyclerView
 	
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
