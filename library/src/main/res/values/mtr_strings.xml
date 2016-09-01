@@ -1,0 +1,5 @@
+<resources>
+    <string name="loading">加载中...</string>
+    <string name="load_more_complete">加载成功</string>
+    <string name="load_more_no_data">没有更多数据了</string>
+</resources>
