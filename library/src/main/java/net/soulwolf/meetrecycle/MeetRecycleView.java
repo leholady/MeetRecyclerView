@@ -260,7 +260,7 @@ public class MeetRecycleView extends RecyclerView {
         }
     }
 
-    private class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
+    public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private RecyclerView.Adapter<ViewHolder> adapter;
 
@@ -278,6 +278,13 @@ public class MeetRecycleView extends RecyclerView {
 
         public int getHeadersCount() {
             return mHeaderViews.size();
+        }
+
+        public int shiftAdjustInt(int position){
+            if(isHeader(position) || isFooter(position)){
+                return -1;
+            }
+            return position - getHeadersCount();
         }
 
         @Override

@@ -13,8 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import net.soulwolf.meetrecycle.MeetRecycleView;
+import net.soulwolf.meetrecycle.OnItemClickListener;
+import net.soulwolf.meetrecycle.OnItemLongClickListener;
 import net.soulwolf.meetrecycle.OnLoadMoreListener;
 
 import java.util.ArrayList;
@@ -64,6 +67,19 @@ public class SimpleListFragment extends Fragment implements SwipeRefreshLayout.O
 
         this.mSwipeRefreshLayout.setRefreshing(true);
         this.onRefresh();
+
+        this.mMtrRecycleView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View clickedView, int position) {
+                Toast.makeText(getContext(), "onItemClick" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        this.mMtrRecycleView.addOnItemTouchListener(new OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
+                Toast.makeText(getContext(), "onItemLongClick" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

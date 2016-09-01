@@ -7,7 +7,7 @@ This is a page RecyclerView data loading, load more support libraries can be cus
   	    <groupId>net.soulwolf.widget</groupId>
 		<url>https://dl.bintray.com/soulwolf/maven</url>
   	    <artifactId>MeetRecycleView</artifactId>
-  	    <version>1.0.0</version>
+  	    <version>1.0.1</version>
 	</dependency>
 ## Gradle
 	allprojects {
@@ -19,7 +19,7 @@ This is a page RecyclerView data loading, load more support libraries can be cus
        }
 	}
 	
-	compile 'net.soulwolf.widget:MeetRecycleView:1.0.0'
+	compile 'net.soulwolf.widget:MeetRecycleView:1.0.1'
 
 ## Developed by
  Ching Soulwolf - <a href='javascript:'>Ching.Soulwolf@gmail.com</a>
