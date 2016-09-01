@@ -17,7 +17,7 @@ import android.view.ViewGroup;
  * author: EwenQin
  * since : 16/8/30 上午10:59.
  */
-public class MeetRecycleView extends RecyclerView {
+public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetryClickListener {
 
     private static final String TAG = "MeetRecycleView";
 
@@ -60,6 +60,7 @@ public class MeetRecycleView extends RecyclerView {
             return;
         }
         this.mLoadView = checkParams(loadView);
+        this.mLoadView.setOnRetryClickListener(this);
         this.mLoadView.setState(LoadMoreState.COMPLETE);
         if(mWrapAdapter != null){
             this.mWrapAdapter.getAdapter().notifyDataSetChanged();
@@ -116,6 +117,11 @@ public class MeetRecycleView extends RecyclerView {
         this.mLoadingData = false;
         this.mNoMore = mNoMore;
         this.mLoadView.setState(LoadMoreState.NO_DATA);
+    }
+
+    public void loadMoreError(){
+        this.mLoadingData = false;
+        this.mLoadView.setState(LoadMoreState.LOAD_ERROR);
     }
 
     public void reset() {
@@ -209,6 +215,16 @@ public class MeetRecycleView extends RecyclerView {
 
     public void setOnLoadMoreListener(OnLoadMoreListener l) {
         this.mLoadMoreListener = l;
+    }
+
+    @Override
+    public void onRetryClick() {
+        this.mLoadingData = true;
+        this.mLoadView.setState(LoadMoreState.LOADING);
+        if (mLoadMoreListener != null) {
+            int itemCount = getLayoutManager().getItemCount();
+            this.mLoadMoreListener.onLoadMore(this, itemCount, itemCount);
+        }
     }
 
     private class DataObserver extends RecyclerView.AdapterDataObserver {

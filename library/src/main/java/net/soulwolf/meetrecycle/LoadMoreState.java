@@ -9,5 +9,5 @@ package net.soulwolf.meetrecycle;
  */
 public enum LoadMoreState {
 
-    LOADING,COMPLETE,NO_DATA
+    LOADING,COMPLETE,LOAD_ERROR,NO_DATA
 }

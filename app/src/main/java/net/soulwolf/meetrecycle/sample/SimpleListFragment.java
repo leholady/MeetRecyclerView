@@ -103,10 +103,16 @@ public class SimpleListFragment extends Fragment implements SwipeRefreshLayout.O
             @Override
             public void run() {
                 if(mDatas.size() < 100){
-                    int afterPos = mDatas.size() - 1;
-                    mDatas.addAll(DataProvider.getSimpleData(20));
-                    mAdapter.notifyItemRangeChanged(afterPos, mDatas.size());
-                    mMtrRecycleView.loadMoreComplete();
+                    if(mDatas.size() == 40){
+                        mDatas.remove(0);
+                        mAdapter.notifyItemRemoved(0);
+                        mMtrRecycleView.loadMoreError();
+                    }else {
+                        int afterPos = mDatas.size();
+                        mDatas.addAll(DataProvider.getSimpleData(20));
+                        mAdapter.notifyItemRangeChanged(afterPos, mDatas.size());
+                        mMtrRecycleView.loadMoreComplete();
+                    }
                 }else {
                     mMtrRecycleView.setNoMore(true);
                 }

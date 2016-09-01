@@ -60,10 +60,15 @@ public class MeetDefaultLoadView extends BaseLoadView {
             this.mLoadProgress.setVisibility(GONE);
             this.mLoadText.setText(R.string.load_more_complete);
             this.setVisibility(GONE);
+        }else if(state == LoadMoreState.LOAD_ERROR){
+            this.setVisibility(VISIBLE);
+            this.mLoadProgress.setVisibility(GONE);
+            this.mLoadText.setText(R.string.load_more_error);
         }else if(state == LoadMoreState.NO_DATA){
             this.setVisibility(VISIBLE);
             this.mLoadProgress.setVisibility(GONE);
             this.mLoadText.setText(R.string.load_more_no_data);
         }
     }
+
 }
