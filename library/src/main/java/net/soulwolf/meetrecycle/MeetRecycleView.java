@@ -289,7 +289,7 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
         }
     }
 
-    public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
+    public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> implements PositionAdjustShift{
 
         private RecyclerView.Adapter<ViewHolder> adapter;
 
@@ -309,11 +309,16 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
             return mHeaderViews.size();
         }
 
-        public int shiftAdjustInt(int position){
+        @Override
+        public int shiftAdjustPosition(int position) {
             if(isHeader(position) || isFooter(position)){
                 return -1;
             }
-            return position - getHeadersCount();
+            int newPosition = position - getHeadersCount();
+            if(adapter != null && adapter instanceof PositionAdjustShift){
+                newPosition = ((PositionAdjustShift)adapter).shiftAdjustPosition(newPosition);
+            }
+            return newPosition;
         }
 
         @Override

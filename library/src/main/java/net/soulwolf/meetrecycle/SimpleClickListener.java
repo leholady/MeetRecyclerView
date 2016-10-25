@@ -99,9 +99,8 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
 
     private int shiftAdjustInt(int position){
         RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
-        if(adapter != null && adapter instanceof MeetRecycleView.WrapAdapter){
-            MeetRecycleView.WrapAdapter wrapAdapter = (MeetRecycleView.WrapAdapter)adapter;
-            return wrapAdapter.shiftAdjustInt(position);
+        if(adapter != null && adapter instanceof PositionAdjustShift){
+            return ((PositionAdjustShift)adapter).shiftAdjustPosition(position);
         }
         return position;
     }
