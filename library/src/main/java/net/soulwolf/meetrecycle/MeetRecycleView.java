@@ -68,27 +68,27 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
         this.setLoadView(new MeetDefaultLoadView(context));
     }
 
-    public void setLoadView(BaseLoadView loadView){
-        if(loadView == null){
+    public void setLoadView(BaseLoadView loadView) {
+        if (loadView == null) {
             return;
         }
         this.mLoadView = checkParams(loadView);
         this.mLoadView.setOnRetryClickListener(this);
         this.mLoadView.setState(LoadMoreState.COMPLETE);
-        if(mWrapAdapter != null){
+        if (mWrapAdapter != null) {
             this.mWrapAdapter.getAdapter().notifyDataSetChanged();
         }
     }
 
-    private BaseLoadView checkParams(BaseLoadView loadView){
-        if(loadView.getLayoutParams() == null){
+    private BaseLoadView checkParams(BaseLoadView loadView) {
+        if (loadView.getLayoutParams() == null) {
             loadView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         return loadView;
     }
 
     public void addHeaderView(View view) {
-        synchronized (mLock){
+        synchronized (mLock) {
             final int size = mHeaderViews.size();
             this.mHeaderViews.put(VIEW_TYPES.TYPE_HEADER + size, view);
             if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null) {
@@ -97,17 +97,17 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
         }
     }
 
-    public void removeHeaderView(View view){
-       synchronized (mLock){
-           int index = mHeaderViews.indexOfValue(view);
-           if(index != -1){
-               int key = mHeaderViews.keyAt(index);
-               this.mHeaderViews.remove(key);
-               if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null) {
-                   this.mWrapAdapter.getAdapter().notifyDataSetChanged();
-               }
-           }
-       }
+    public void removeHeaderView(View view) {
+        synchronized (mLock) {
+            int index = mHeaderViews.indexOfValue(view);
+            if (index != -1) {
+                int key = mHeaderViews.keyAt(index);
+                this.mHeaderViews.remove(key);
+                if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null) {
+                    this.mWrapAdapter.getAdapter().notifyDataSetChanged();
+                }
+            }
+        }
     }
 
     private View getHeaderViewByType(int itemType) {
@@ -132,7 +132,7 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
         this.mLoadView.setState(LoadMoreState.NO_DATA);
     }
 
-    public void loadMoreError(){
+    public void loadMoreError() {
         this.mLoadingData = false;
         this.mLoadView.setState(LoadMoreState.LOAD_ERROR);
     }
@@ -160,32 +160,32 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
 
     @Override
     public void setAdapter(Adapter adapter) {
-        if(mWrapAdapter != null){
+        if (mWrapAdapter != null) {
             this.mWrapAdapter.getAdapter().unregisterAdapterDataObserver(mDataObserver);
             this.mWrapAdapter = null;
         }
-        if(adapter != null){
+        if (adapter != null) {
             this.mWrapAdapter = new WrapAdapter(adapter);
             this.mWrapAdapter.getAdapter().registerAdapterDataObserver(mDataObserver);
         }
         super.setAdapter(mWrapAdapter);
-        if(mWrapAdapter != null){
+        if (mWrapAdapter != null) {
             this.mWrapAdapter.getAdapter().notifyDataSetChanged();
         }
     }
 
     @Override
     public void swapAdapter(Adapter adapter, boolean removeAndRecycleExistingViews) {
-        if(mWrapAdapter != null){
+        if (mWrapAdapter != null) {
             this.mWrapAdapter.getAdapter().unregisterAdapterDataObserver(mDataObserver);
             this.mWrapAdapter = null;
         }
-        if(adapter != null){
+        if (adapter != null) {
             this.mWrapAdapter = new WrapAdapter(adapter);
             this.mWrapAdapter.getAdapter().registerAdapterDataObserver(mDataObserver);
         }
         super.swapAdapter(mWrapAdapter, removeAndRecycleExistingViews);
-        if(mWrapAdapter != null){
+        if (mWrapAdapter != null) {
             this.mWrapAdapter.getAdapter().notifyDataSetChanged();
         }
     }
@@ -289,7 +289,7 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
         }
     }
 
-    public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> implements PositionAdjustShift{
+    public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> implements MeetPositionAjust, PositionAdjustShift {
 
         private RecyclerView.Adapter<ViewHolder> adapter;
 
@@ -297,8 +297,27 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
             this.adapter = adapter;
         }
 
+        @Override
+        public int adjustMeetPosition(int position) {
+            if (isHeader(position) || isFooter(position)) {
+                return -1;
+            }
+            return position - getHeadersCount();
+        }
+
+        @Override
+        public int getHeaderCount() {
+            return getHeadersCount();
+        }
+
+        @Override
         public boolean isHeader(int position) {
             return position >= 0 && position < mHeaderViews.size();
+        }
+
+        @Override
+        public boolean isLoadMore(int position) {
+            return isFooter(position);
         }
 
         public boolean isFooter(int position) {
@@ -311,12 +330,9 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
 
         @Override
         public int shiftAdjustPosition(int position) {
-            if(isHeader(position) || isFooter(position)){
-                return -1;
-            }
-            int newPosition = position - getHeadersCount();
-            if(adapter != null && adapter instanceof PositionAdjustShift){
-                newPosition = ((PositionAdjustShift)adapter).shiftAdjustPosition(newPosition);
+            int newPosition = adjustMeetPosition(position);
+            if (adapter != null && adapter instanceof PositionAdjustShift) {
+                newPosition = ((PositionAdjustShift) adapter).shiftAdjustPosition(newPosition);
             }
             return newPosition;
         }
