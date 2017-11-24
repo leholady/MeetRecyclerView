@@ -246,7 +246,7 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
         public void onChanged() {
             Adapter<?> adapter = getAdapter();
             if (adapter != null && mEmptyView != null) {
-                int emptyCount = 0;
+                int emptyCount = mHeaderViews.size();
                 if (mLoadMoreEnabled) {
                     emptyCount++;
                 }
