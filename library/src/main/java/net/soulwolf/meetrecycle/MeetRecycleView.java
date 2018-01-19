@@ -293,7 +293,7 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
 
         private RecyclerView.Adapter<ViewHolder> adapter;
 
-        public WrapAdapter(RecyclerView.Adapter<ViewHolder> adapter) {
+        WrapAdapter(RecyclerView.Adapter<ViewHolder> adapter) {
             this.adapter = adapter;
         }
 
@@ -415,11 +415,14 @@ public class MeetRecycleView extends RecyclerView implements BaseLoadView.OnRetr
             RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
             if (manager instanceof GridLayoutManager) {
                 final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+                final GridLayoutManager.SpanSizeLookup sizeLookup = gridManager.getSpanSizeLookup();
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return (isHeader(position) || isFooter(position))
-                                ? gridManager.getSpanCount() : 1;
+                        if (isHeader(position) || isFooter(position)) {
+                            return gridManager.getSpanCount();
+                        }
+                        return sizeLookup != null ? sizeLookup.getSpanSize(position) : 1;
                     }
                 });
             }

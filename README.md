@@ -1,4 +1,4 @@
-# MeetRecyclerView
+# MeetRecyclerView[ ![Download](https://api.bintray.com/packages/soulwolf/maven/MeetRecyclerView/images/download.svg) ](https://bintray.com/soulwolf/maven/MeetRecyclerView/_latestVersion)
 This is a page RecyclerView data loading, load more support libraries can be customized loading animation
 
 
@@ -7,7 +7,7 @@ This is a page RecyclerView data loading, load more support libraries can be cus
   	    <groupId>net.soulwolf.widget</groupId>
 		<url>https://dl.bintray.com/soulwolf/maven</url>
   	    <artifactId>MeetRecyclerView</artifactId>
-  	    <version>1.1.1</version>
+  	    <version>x.y.z</version>
 	</dependency>
 ## Gradle
 	allprojects {
@@ -19,7 +19,7 @@ This is a page RecyclerView data loading, load more support libraries can be cus
        }
 	}
 	
-	compile 'net.soulwolf.widget:MeetRecyclerView:1.1.1'
+	compile 'net.soulwolf.widget:MeetRecyclerView:x.y.z'
 
 ## Developed by
  Ching Soulwolf - <a href='javascript:'>Ching.Soulwolf@gmail.com</a>
